@@ -26,22 +26,13 @@ export const Form: FC = () => {
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState("");
   const [toggle, setToggle] = useState(true);
-  const [variant, setVariant] = useState(0);
-
-  useEffect(() => {
-    if (toggle) {
-      setVariant(1);
-    } else {
-      setVariant(0);
-    }
-  }, [toggle]);
 
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (variant == 1) {
+    if (toggle == true) {
       const movie = new Movie(title, rating, description);
       handleTransactionSubmit(movie);
     } else {
