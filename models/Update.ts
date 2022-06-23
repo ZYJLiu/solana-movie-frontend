@@ -1,6 +1,6 @@
 import * as borsh from "@project-serum/borsh";
 
-export class Movie {
+export class Update {
   title: string;
   rating: number;
   description: string;
@@ -27,11 +27,11 @@ export class Movie {
 
   serialize(): Buffer {
     const buffer = Buffer.alloc(1000);
-    this.borshInstructionSchema.encode({ ...this, variant: 0 }, buffer);
+    this.borshInstructionSchema.encode({ ...this, variant: 1 }, buffer);
     return buffer.slice(0, this.borshInstructionSchema.getSpan(buffer));
   }
 
-  static deserialize(buffer?: Buffer): Movie | null {
+  static deserialize(buffer?: Buffer): Update | null {
     if (!buffer) {
       return null;
     }
@@ -39,7 +39,7 @@ export class Movie {
     try {
       const { title, rating, description } =
         this.borshAccountSchema.decode(buffer);
-      return new Movie(title, rating, description);
+      return new Update(title, rating, description);
     } catch (e) {
       console.log("Deserialization error:", e);
       console.log(buffer);
